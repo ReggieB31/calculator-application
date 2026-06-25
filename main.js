@@ -15,6 +15,32 @@ function calculate(e){
     } else if(counter == 1 && !isNaN(inputValue)) {
         var2 += inputValue;
     } 
+    // Negative number support and subtraction.
+    if(var1 == "" && inputValue == "-"){
+        var1 += inputValue;
+        inputDisplay += inputValue;
+        display.textContent = inputDisplay;
+        operationCounter--;
+    } else if(var2 == "" && inputValue == "-"){
+        if(var1 != "" && operationCounter == 0){
+        operation = inputValue;
+        inputDisplay += " " + inputValue + " ";
+        display.textContent = inputDisplay;
+        operationCounter++;
+        counter++;
+        decimalCounter = 0;
+        } else{
+        var2 += inputValue;
+        inputDisplay += inputValue;
+        display.textContent = inputDisplay;
+        }
+    }
+    
+        // Displays these variables.
+    if(counter < 2 && !isNaN(inputValue)){
+        inputDisplay += inputValue;
+        display.textContent = inputDisplay;
+    }
     
     // Handles decimals.
     if(e.target.dataset.value == "." && decimalCounter == 0){
@@ -23,30 +49,29 @@ function calculate(e){
             var1 += ".";
             decimalCounter++;
         } else if(counter == 1){
-            decimalCounter = 0;
             var2 += ".";
             decimalCounter++;
         }
         display.textContent = inputDisplay;
     }
 
-    // Handles any operation besides clear.
+    // Handles any operation besides clear and subtraction.
     if(isNaN(inputValue) && inputValue != "clear"){
         if(operationCounter < 1 && inputValue != "."){
-            if(inputValue != "=" && var1 != ""){
+            if(inputValue != "=" && var1 != "")
+                if(inputValue != "-"){
+        {
         operation = inputValue;
         inputDisplay += " " + inputValue + " ";
         display.textContent = inputDisplay;
         operationCounter++;
         counter++;
+        decimalCounter = 0;
         }
     }
 }
+}
 
-    if(counter < 2 && !isNaN(inputValue)){
-        inputDisplay += inputValue;
-        display.textContent = inputDisplay;
-    }
     // Handles the equals operation and resets the equation with the result as the first variable.  
     if(inputValue == "=" && var2 != "") {
         let value;
@@ -76,7 +101,7 @@ function calculate(e){
         counter = 0;
         operationCounter = 0;
         operation = undefined;
-        decimalCounter = 0;
+        decimalCounter = 1;
         }
 
     // Handles the clear button behavior.
