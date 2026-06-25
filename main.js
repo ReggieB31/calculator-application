@@ -4,25 +4,42 @@ let var1 = "";
 let var2 = "";
 let counter = 0;
 let operationCounter = 0;
+let decimalCounter = 0;
 let operation;
 
 function calculate(e){
     let inputValue = e.target.dataset.value;
-    // assigns input values to the two variables and displays them.
+    // assigns input values to the two variables.
     if(counter == 0 && !isNaN(inputValue)){
         var1 += inputValue; 
     } else if(counter == 1 && !isNaN(inputValue)) {
         var2 += inputValue;
     } 
     
+    // Handles decimals.
+    if(e.target.dataset.value == "." && decimalCounter == 0){
+        inputDisplay += inputValue;
+        if(counter == 0){
+            var1 += ".";
+            decimalCounter++;
+        } else if(counter == 1){
+            decimalCounter = 0;
+            var2 += ".";
+            decimalCounter++;
+        }
+        display.textContent = inputDisplay;
+    }
+
     // Handles any operation besides clear.
     if(isNaN(inputValue) && inputValue != "clear"){
-        if(operationCounter < 1){
+        if(operationCounter < 1 && inputValue != "."){
+            if(inputValue != "="){
         operation = inputValue;
-        inputDisplay += inputValue;
+        inputDisplay += " " + inputValue + " ";
         display.textContent = inputDisplay;
         operationCounter++;
         counter++;
+        }
     }
 }
 
@@ -31,7 +48,7 @@ function calculate(e){
         display.textContent = inputDisplay;
     }
     // Handles the equals operation and resets the equation with the result as the first variable.  
-    if(inputValue == "="){
+    if(inputValue == "=" && var2 != "") {
         let value;
         let num1 = Number(var1);
         let num2 = Number(var2);
@@ -45,7 +62,7 @@ function calculate(e){
             case "*":
                 value = num1 * num2;
                 break;
-            case "%":
+            case "/":
                 value = num1 / num2;
                 break;
             case "^":
@@ -59,6 +76,7 @@ function calculate(e){
         counter = 0;
         operationCounter = 0;
         operation = undefined;
+        decimalCounter = 0;
         }
 
     // Handles the clear button behavior.
@@ -70,5 +88,6 @@ function calculate(e){
             operationCounter = 0;
             operation = "";
             display.textContent = inputDisplay;
+            decimalCounter = 0;
     }
 }
