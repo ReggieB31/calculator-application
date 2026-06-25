@@ -33,7 +33,7 @@ function calculate(e){
     // Handles any operation besides clear.
     if(isNaN(inputValue) && inputValue != "clear"){
         if(operationCounter < 1 && inputValue != "."){
-            if(inputValue != "="){
+            if(inputValue != "=" && var1 != ""){
         operation = inputValue;
         inputDisplay += " " + inputValue + " ";
         display.textContent = inputDisplay;
