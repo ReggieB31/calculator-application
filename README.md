@@ -1,2 +1,5 @@
 # calculator-application
-Calculator project that will be able to do basic mathematical operations, built using the skills garnered through the Meta Fullstack Dev Cert and created as a practice project. 
+**Calculator**
+Browser-based calculator built as a practice project using vanilla HTML, CSS, and JavaScript.
+
+**Features:**
